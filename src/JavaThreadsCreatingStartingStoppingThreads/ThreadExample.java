@@ -349,6 +349,9 @@ class ThreadExample10
         Running
         Running
         Running
+
+
+        Cause of IllegalThreadStateException it is because the JVM calls the .run() method
          */
         thread.start();
 

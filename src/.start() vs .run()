@@ -1,0 +1,35 @@
+.start()
+execution of a new thread and schedules it for execution by the JVM
+.run()
+directly will execute the code in the same thread as the caller, instead
+of creating a new thread.
+
+Why we must use .start() instead?
+The .run() has the possibility of your program being unable to perform
+other tasks while the code is running, which can lead to poor performance
+and unresponsiveness.
+
+https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html#start--
+
+public void start()
+Causes this thread to begin execution; the Java Virtual Machine calls the run method of this thread.
+The result is that two threads are running concurrently: the current thread (which returns from the call
+to the start method) and the other thread (which executes its run method).
+
+It is never legal to start a thread more than once. In particular, a thread may not be restarted once it
+has completed execution.
+
+Throws:
+IllegalThreadStateException - if the thread was already started.
+See Also:
+run(), stop()
+
+public void run()
+If this thread was constructed using a separate Runnable run object, then that Runnable object's run method
+is called; otherwise, this method does nothing and returns.
+Subclasses of Thread should override this method.
+
+Specified by:
+run in interface Runnable
+See Also:
+start(), stop(), Thread(ThreadGroup, Runnable, String)
