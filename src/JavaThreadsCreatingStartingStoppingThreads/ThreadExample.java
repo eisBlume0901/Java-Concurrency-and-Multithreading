@@ -5,6 +5,14 @@ create and instantiate the Thread object and call its method .start()
 to execute the program
 2. Create a class and implements Runnable (Can be abstraction), override the run method (Polymorphism),
 create and instantiate the Thread object, wrap the Runnable object, and call its method .start()
+The Runnable interface is preferred over the Thread class for creating threads in Java 12.
+This is because the Runnable interface provides a cleaner separation between your code and
+the implementation of threads, making your code more flexible 1.
+
+When you extend the Thread class, you are modifying the thread’s behavior, which can lead to conflicts
+when you add more features inside your class 1. On the other hand, when you implement the Runnable interface,
+you are simply giving the thread something to run, which means composition is the better way to go 1.
+
 3.
  */
 public class ThreadExample
@@ -54,5 +62,12 @@ class ThreadExample3
             Thread thread = new Thread(new MyRunnable());
             thread.start();
         }
+    }
+}
+class ThreadExample4
+{
+    public static void main(String[] args)
+    {
+
     }
 }
