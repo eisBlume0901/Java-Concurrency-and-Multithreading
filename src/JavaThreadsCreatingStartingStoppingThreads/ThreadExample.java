@@ -290,6 +290,10 @@ class ThreadExample9
             When all user threads finish their execution,
             the JVM automatically terminates the daemon thread.
 
+            They are stopped in undefined state so be sure that daemon threads are resting
+            in a state or in a path in the code where they are not in the middle of executing
+            some important which is then only half finished because that might lead to undesirable
+            side effects in the application.
             When to use?
             1.
 
@@ -298,6 +302,73 @@ class ThreadExample9
         Running
         Running
          */
+    }
+
+    public static void sleep(long millis)
+    {
+        try
+        {
+            Thread.sleep(millis);
+        }
+        catch (InterruptedException interruptedException)
+        {
+            interruptedException.printStackTrace();
+        }
+    }
+}
+
+class ThreadExample10
+{
+    public static void main(String[] args)
+    {
+        Runnable runnable = () ->
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                sleep(1000);
+                System.out.println("Running");
+            }
+        };
+
+        Thread thread = new Thread(runnable);
+        thread.setDaemon(true); // The main thread will terminate immediately
+        /*
+        If the code is like this:
+
+        Thread thread = new Thread(runnable);
+        thread.start();
+        thread.setDaemon(true);
+
+        Output:
+
+        Exception in thread "main" java.lang.IllegalThreadStateException
+	at java.base/java.lang.Thread.setDaemon(Thread.java:2276)
+	at JavaThreadsCreatingStartingStoppingThreads.ThreadExample10.main(ThreadExample.java:335)
+        Running
+        Running
+        Running
+        Running
+        Running
+         */
+        thread.start();
+
+//        try
+//        {
+//            thread.join();
+//            /*
+//            thread.join() is used to wait for the child daemon thread (since we set it to true)
+//            to complete its execution before the main thread terminates.
+//
+//            If we remove or did not put thread.join(), the main thread will terminate immediately
+//            after starting the child thread without waiting for it to complete its execution.
+//             */
+//        }
+//        catch (InterruptedException interruptedException)
+//        {
+//            interruptedException.printStackTrace();
+//        }
+
+
     }
 
     public static void sleep(long millis)
